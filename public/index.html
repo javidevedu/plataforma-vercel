@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Aprendizaje Gamificado</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-graduation-cap"></i> Plataforma de Aprendizaje Gamificado</h1>
+                <p>Crea actividades interactivas y gamificadas para tus estudiantes</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="welcome-section">
+                <h2>¡Bienvenido, Docente!</h2>
+                <p>Crea una nueva actividad y obtén enlaces únicos para estudiantes y administración</p>
+            </div>
+
+            <div class="activity-creation">
+                <h3>Crear Nueva Actividad</h3>
+                <form id="activityForm" class="activity-form">
+                    <div class="form-group">
+                        <label for="activityTitle">Título de la Actividad</label>
+                        <input type="text" id="activityTitle" name="title" required placeholder="Ej: Quiz de Historia Antigua">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="activityType">Tipo de Actividad</label>
+                        <select id="activityType" name="type" required>
+                            <option value="">Selecciona un tipo</option>
+                            <option value="quiz">📚 Quiz (Reading)</option>
+                            <option value="fill-blanks">✍️ Fill in the blanks (Writing)</option>
+                            <option value="listening">🎧 Listening</option>
+                            <option value="speaking">🎤 Speaking</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="activityDescription">Descripción</label>
+                        <textarea id="activityDescription" name="description" placeholder="Describe la actividad para tus estudiantes..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="timeLimit">Tiempo límite (minutos)</label>
+                        <input type="number" id="timeLimit" name="timeLimit" min="1" max="120" value="30">
+                    </div>
+
+                    <button type="submit" class="create-btn">
+                        <i class="fas fa-plus"></i> Crear Actividad
+                    </button>
+                </form>
+            </div>
+
+            <div id="activityCreated" class="activity-created hidden">
+                <div class="success-message">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>¡Actividad Creada Exitosamente!</h3>
+                    <p>Tu actividad ha sido creada y los enlaces están listos para compartir</p>
+                </div>
+
+                <div class="links-container">
+                    <div class="link-card student-link">
+                        <h4><i class="fas fa-user-graduate"></i> Enlace para Estudiantes</h4>
+                        <div class="link-content">
+                            <input type="text" id="studentLink" readonly>
+                            <button onclick="copyToClipboard('studentLink')" class="copy-btn">
+                                <i class="fas fa-copy"></i> Copiar
+                            </button>
+                        </div>
+                        <p>Comparte este enlace con tus estudiantes para que resuelvan la actividad</p>
+                    </div>
+
+                    <div class="link-card admin-link">
+                        <h4><i class="fas fa-chart-line"></i> Enlace de Administración</h4>
+                        <div class="link-content">
+                            <input type="text" id="adminLink" readonly>
+                            <button onclick="copyToClipboard('adminLink')" class="copy-btn">
+                                <i class="fas fa-copy"></i> Copiar
+                            </button>
+                        </div>
+                        <p>Usa este enlace para ver resultados, calificaciones y administrar la actividad</p>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button onclick="goToStudentView()" class="btn btn-primary">
+                        <i class="fas fa-eye"></i> Ver como Estudiante
+                    </button>
+                    <button onclick="goToAdminView()" class="btn btn-secondary">
+                        <i class="fas fa-cog"></i> Ir a Administración
+                    </button>
+                    <button onclick="createNewActivity()" class="btn btn-outline">
+                        <i class="fas fa-plus"></i> Crear Otra Actividad
+                    </button>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <h3>Características de la Plataforma</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-question-circle"></i>
+                        <h4>Quizzes Interactivos</h4>
+                        <p>Preguntas de opción múltiple con calificación automática</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-edit"></i>
+                        <h4>Fill in the Blanks</h4>
+                        <p>Ejercicios de escritura con palabras ocultas</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-volume-up"></i>
+                        <h4>Listening</h4>
+                        <p>Actividades de comprensión auditiva con archivos de audio</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-microphone"></i>
+                        <h4>Speaking</h4>
+                        <p>Grabación de voz para práctica de expresión oral</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-trophy"></i>
+                        <h4>Cartas Coleccionables</h4>
+                        <p>Recompensas digitales para motivar a los estudiantes</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-chart-bar"></i>
+                        <h4>Análisis de Resultados</h4>
+                        <p>Reportes detallados y exportación de datos</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 Plataforma de Aprendizaje Gamificado. Desarrollado para educadores.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

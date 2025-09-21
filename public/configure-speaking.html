@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurar Speaking - Plataforma de Aprendizaje</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="configure-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="configure-container">
+        <!-- Header -->
+        <header class="configure-header">
+            <div class="header-content">
+                <h1><i class="fas fa-microphone"></i> Configurar Speaking</h1>
+                <div class="header-actions">
+                    <button id="previewActivity" class="btn btn-secondary">
+                        <i class="fas fa-eye"></i> Vista Previa
+                    </button>
+                    <button id="saveActivity" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Guardar Actividad
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="configure-content">
+            <!-- Activity Info -->
+            <div class="activity-info-section">
+                <h2>Información de la Actividad</h2>
+                <div class="form-group">
+                    <label for="activityTitle">Título de la Actividad</label>
+                    <input type="text" id="activityTitle" placeholder="Ej: Describe la imagen">
+                </div>
+                <div class="form-group">
+                    <label for="activityDescription">Descripción</label>
+                    <textarea id="activityDescription" placeholder="Describe la actividad para los estudiantes..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="activityTimeLimit">Tiempo límite (minutos)</label>
+                    <input type="number" id="activityTimeLimit" min="1" max="120" value="30">
+                </div>
+            </div>
+
+            <!-- Speaking Prompt Configuration -->
+            <div class="speaking-prompt-section">
+                <div class="section-header">
+                    <h2>Configuración del Prompt</h2>
+                </div>
+
+                <div class="prompt-type-selection">
+                    <h3>Tipo de Prompt</h3>
+                    <div class="prompt-options">
+                        <label class="prompt-option">
+                            <input type="radio" name="promptType" value="text" checked>
+                            <i class="fas fa-font"></i>
+                            <span>Texto</span>
+                        </label>
+                        <label class="prompt-option">
+                            <input type="radio" name="promptType" value="image">
+                            <i class="fas fa-image"></i>
+                            <span>Imagen</span>
+                        </label>
+                        <label class="prompt-option">
+                            <input type="radio" name="promptType" value="audio">
+                            <i class="fas fa-volume-up"></i>
+                            <span>Audio</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Text Prompt -->
+                <div id="textPrompt" class="prompt-configuration">
+                    <div class="form-group">
+                        <label for="speakingInstructions">Instrucciones para el estudiante</label>
+                        <textarea id="speakingInstructions" placeholder="Escribe las instrucciones que debe seguir el estudiante..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Image Prompt -->
+                <div id="imagePrompt" class="prompt-configuration hidden">
+                    <div class="form-group">
+                        <label for="imageFile">Imagen de referencia</label>
+                        <div class="file-upload-container">
+                            <input type="file" id="imageFile" accept="image/*" class="file-input">
+                            <label for="imageFile" class="file-upload-label">
+                                <i class="fas fa-upload"></i>
+                                <span>Seleccionar imagen</span>
+                            </label>
+                        </div>
+                        <small class="help-text">
+                            <i class="fas fa-info-circle"></i>
+                            Formatos soportados: JPG, PNG, GIF. Tamaño máximo: 5MB
+                        </small>
+                    </div>
+
+                    <div id="imagePreview" class="image-preview hidden">
+                        <h3>Vista Previa de la Imagen</h3>
+                        <div class="image-container">
+                            <img id="previewImage" src="" alt="Imagen de referencia">
+                        </div>
+                        <div class="image-info">
+                            <p><strong>Archivo:</strong> <span id="imageFileName"></span></p>
+                            <p><strong>Tamaño:</strong> <span id="imageFileSize"></span></p>
+                        </div>
+                        <button id="removeImage" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Remover Imagen
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imageInstructions">Instrucciones adicionales</label>
+                        <textarea id="imageInstructions" placeholder="Describe qué debe hacer el estudiante con la imagen..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Audio Prompt -->
+                <div id="audioPrompt" class="prompt-configuration hidden">
+                    <div class="form-group">
+                        <label for="audioFile">Archivo de audio de referencia</label>
+                        <div class="file-upload-container">
+                            <input type="file" id="audioFile" accept="audio/*" class="file-input">
+                            <label for="audioFile" class="file-upload-label">
+                                <i class="fas fa-upload"></i>
+                                <span>Seleccionar archivo de audio</span>
+                            </label>
+                        </div>
+                        <small class="help-text">
+                            <i class="fas fa-info-circle"></i>
+                            Formatos soportados: MP3, WAV, OGG. Tamaño máximo: 10MB
+                        </small>
+                    </div>
+
+                    <div id="audioPreview" class="audio-preview hidden">
+                        <h3>Vista Previa del Audio</h3>
+                        <div class="audio-player-container">
+                            <audio id="audioPlayer" controls>
+                                <source id="audioSource" src="" type="audio/mpeg">
+                                Tu navegador no soporta el elemento de audio.
+                            </audio>
+                        </div>
+                        <div class="audio-info">
+                            <p><strong>Archivo:</strong> <span id="audioFileName"></span></p>
+                            <p><strong>Tamaño:</strong> <span id="audioFileSize"></span></p>
+                            <p><strong>Duración:</strong> <span id="audioDuration"></span></p>
+                        </div>
+                        <button id="removeAudio" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Remover Audio
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="audioInstructions">Instrucciones adicionales</label>
+                        <textarea id="audioInstructions" placeholder="Describe qué debe hacer el estudiante con el audio..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Speaking Criteria -->
+            <div class="speaking-criteria-section">
+                <div class="section-header">
+                    <h2>Criterios de Evaluación</h2>
+                </div>
+
+                <div class="criteria-grid">
+                    <div class="criteria-item">
+                        <h4>Fluidez</h4>
+                        <div class="criteria-options">
+                            <label>
+                                <input type="checkbox" name="fluency" value="pronunciation">
+                                Pronunciación clara
+                            </label>
+                            <label>
+                                <input type="checkbox" name="fluency" value="rhythm">
+                                Ritmo natural
+                            </label>
+                            <label>
+                                <input type="checkbox" name="fluency" value="pauses">
+                                Pausas apropiadas
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="criteria-item">
+                        <h4>Contenido</h4>
+                        <div class="criteria-options">
+                            <label>
+                                <input type="checkbox" name="content" value="relevance">
+                                Relevancia al tema
+                            </label>
+                            <label>
+                                <input type="checkbox" name="content" value="completeness">
+                                Completitud de la respuesta
+                            </label>
+                            <label>
+                                <input type="checkbox" name="content" value="creativity">
+                                Creatividad
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="criteria-item">
+                        <h4>Estructura</h4>
+                        <div class="criteria-options">
+                            <label>
+                                <input type="checkbox" name="structure" value="organization">
+                                Organización clara
+                            </label>
+                            <label>
+                                <input type="checkbox" name="structure" value="coherence">
+                                Coherencia
+                            </label>
+                            <label>
+                                <input type="checkbox" name="structure" value="transitions">
+                                Transiciones fluidas
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="evaluationNotes">Notas adicionales para la evaluación</label>
+                    <textarea id="evaluationNotes" placeholder="Agrega notas específicas para ayudar en la evaluación..."></textarea>
+                </div>
+            </div>
+
+            <!-- Preview Section -->
+            <div id="previewSection" class="preview-section hidden">
+                <div class="section-header">
+                    <h2>Vista Previa de la Actividad</h2>
+                    <button id="closePreview" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cerrar Vista Previa
+                    </button>
+                </div>
+                <div id="previewContent" class="preview-content">
+                    <!-- El contenido de vista previa se cargará aquí -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="configure-speaking-script.js"></script>
+</body>
+</html>

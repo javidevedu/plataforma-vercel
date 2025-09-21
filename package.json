@@ -1,0 +1,22 @@
+{
+  "name": "gamified-learning-platform",
+  "version": "1.0.0",
+  "description": "Plataforma web de aprendizaje gamificado",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Build completed'",
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "multer": "^1.4.5-lts.1",
+    "uuid": "^9.0.1",
+    "canvas": "^2.11.2"
+  },
+  "devDependencies": {
+    "@vercel/node": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
