@@ -1,75 +1,49 @@
-const database = require('./database');
+const { v4: uuidv4 } = require('uuid');
+const { createClient } = require('@vercel/postgres');
 
-module.exports = async (req, res) => {
-    // Configurar CORS
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+export default async function handler(req, res) {
+  // Configurar CORS
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  );
 
-    if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
-    }
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
 
-    try {
-        if (req.method === 'POST') {
-            // Crear nueva actividad
-            const { title, type, description, timeLimit } = req.body;
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
-            if (!title || !type) {
-                return res.status(400).json({ 
-                    error: 'Título y tipo son requeridos' 
-                });
-            }
+  try {
+    const { title, type, content, correctAnswers } = req.body;
+    const activityId = uuidv4();
+    const studentLink = uuidv4();
+    const adminLink = uuidv4();
 
-            const validTypes = ['quiz', 'fill-blanks', 'listening', 'speaking'];
-            if (!validTypes.includes(type)) {
-                return res.status(400).json({ 
-                    error: 'Tipo de actividad no válido' 
-                });
-            }
+    const client = createClient({
+      connectionString: process.env.POSTGRES_URL,
+    });
 
-            const activity = database.createActivity({
-                title,
-                type,
-                description: description || '',
-                timeLimit: timeLimit || 30,
-                questions: [], // Se llenará cuando se configure la actividad
-                status: 'draft' // Borrador hasta que se configure completamente
-            });
+    await client.sql`
+      INSERT INTO activities (id, title, type, content, correct_answers, student_link, admin_link, created_at)
+      VALUES (${activityId}, ${title}, ${type}, ${JSON.stringify(content)}, ${JSON.stringify(correctAnswers)}, ${studentLink}, ${adminLink}, NOW())
+    `;
 
-            res.status(201).json(activity);
+    res.json({
+      id: activityId,
+      studentLink: studentLink,
+      adminLink: adminLink,
+      message: 'Actividad creada exitosamente'
+    });
 
-        } else if (req.method === 'GET') {
-            // Obtener actividad por ID
-            const { id } = req.query;
-            
-            if (!id) {
-                return res.status(400).json({ 
-                    error: 'ID de actividad requerido' 
-                });
-            }
-
-            const activity = database.getActivity(id);
-            
-            if (!activity) {
-                return res.status(404).json({ 
-                    error: 'Actividad no encontrada' 
-                });
-            }
-
-            res.json(activity);
-
-        } else {
-            res.status(405).json({ 
-                error: 'Método no permitido' 
-            });
-        }
-
-    } catch (error) {
-        console.error('Error en API de actividades:', error);
-        res.status(500).json({ 
-            error: 'Error interno del servidor' 
-        });
-    }
-};
+  } catch (error) {
+    console.error('Error creating activity:', error);
+    res.status(500).json({ error: error.message });
+  }
+}

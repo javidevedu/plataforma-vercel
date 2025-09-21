@@ -1,245 +1,189 @@
-# Plataforma de Aprendizaje Gamificado
+# AppSemillero - Plataforma de Aprendizaje Gamificado
 
-Una plataforma web completa para crear actividades de aprendizaje interactivas y gamificadas, diseñada para educadores y estudiantes.
+Una plataforma web completa para crear actividades educativas gamificadas con sistema de recompensas coleccionables.
 
-## 🚀 Características
+## 🚀 Características Principales
 
-### Para Docentes
-- **Creación de Actividades**: 4 tipos de actividades diferentes
-  - 📚 **Quiz (Reading)**: Preguntas de opción múltiple con calificación automática
-  - ✍️ **Fill in the Blanks (Writing)**: Texto con espacios en blanco para completar
-  - 🎧 **Listening**: Actividades de comprensión auditiva con archivos de audio
-  - 🎤 **Speaking**: Grabación de voz con diferentes tipos de prompts
+### Tipos de Actividades
+- **Quiz (Reading)**: Preguntas de selección múltiple para comprensión lectora
+- **Fill in the blanks (Writing)**: Completar espacios en blanco para práctica de escritura
+- **Listening**: Actividades de comprensión auditiva con archivos de audio
+- **Speaking**: Práctica de expresión oral con grabación de voz
 
-- **Gestión de Resultados**: Panel de administración completo
-  - Ver calificaciones y resultados de estudiantes
-  - Revisar grabaciones de audio (Speaking)
-  - Exportar datos a CSV/Excel
-  - Filtros y búsqueda avanzada
+### Sistema de Enlaces Únicos
+- Cada actividad genera automáticamente dos enlaces únicos:
+  - Enlace para estudiantes
+  - Enlace para administrador/docente
 
-- **Enlaces Únicos**: Generación automática de enlaces para estudiantes y administración
+### Calificación Automática
+- Quiz, Fill blanks y Listening se califican automáticamente
+- Speaking queda pendiente para revisión manual
 
-### Para Estudiantes
-- **Interfaz Intuitiva**: Diseño moderno y responsive
-- **Actividades Interactivas**: Diferentes tipos de ejercicios adaptados a cada habilidad
-- **Cartas Coleccionables**: Sistema de recompensas digitales
-  - Cartas personalizadas por actividad completada
-  - Diferentes personajes según el tipo de habilidad
-  - Descarga de cartas como imágenes PNG
-  - Colección personal de logros
+### Cartas Coleccionables
+- Sistema de recompensas tipo trading card
+- Cartas personalizadas con:
+  - Nombre del estudiante
+  - Nombre de la actividad
+  - Personaje asociado a la habilidad
+  - Nivel de desempeño
+- Descarga en formato PNG o PDF
 
-### Características Técnicas
-- **Frontend**: HTML5, CSS3, JavaScript puro
-- **Backend**: API Routes de Vercel con Node.js
-- **Base de Datos**: Archivos JSON en memoria (preparado para migración a Supabase/SQLite)
-- **Hosting**: Optimizado para Vercel (plan gratuito)
-- **Responsive**: Compatible con dispositivos móviles y desktop
+### Panel de Administración
+- Visualización de resultados en tiempo real
+- Exportación a CSV y Excel
+- Reproducción de audios de Speaking
+- Estadísticas detalladas
 
-## 📁 Estructura del Proyecto
+## 🛠️ Instalación
 
-```
-├── api/                          # API Routes de Vercel
-│   ├── activities.js             # CRUD de actividades
-│   ├── activities/[id].js        # Operaciones específicas por actividad
-│   ├── results.js                # Gestión de resultados
-│   ├── export.js                 # Exportación de datos
-│   ├── upload-audio.js           # Subida de archivos de audio
-│   ├── upload-image.js           # Subida de imágenes
-│   ├── generate-card.js          # Generación de cartas coleccionables
-│   ├── database.js               # Base de datos JSON
-│   └── uploads/                  # Archivos subidos
-│       ├── audio/[filename].js   # Servir archivos de audio
-│       └── images/[filename].js  # Servir imágenes
-├── public/                       # Frontend estático
-│   ├── index.html                # Página principal (docente)
-│   ├── styles.css                # Estilos principales
-│   ├── script.js                 # JavaScript principal
-│   ├── actividad/[id].html       # Vista de estudiantes
-│   ├── student-styles.css        # Estilos para estudiantes
-│   ├── student-script.js         # JavaScript para estudiantes
-│   ├── admin/[id].html           # Vista de administración
-│   ├── admin-styles.css          # Estilos para administración
-│   ├── admin-script.js           # JavaScript para administración
-│   ├── configure-quiz.html       # Configuración de quizzes
-│   ├── configure-quiz-script.js  # JavaScript para quizzes
-│   ├── configure-fill-blanks.html # Configuración de fill blanks
-│   ├── configure-fill-blanks-script.js # JavaScript para fill blanks
-│   ├── configure-listening.html  # Configuración de listening
-│   ├── configure-listening-script.js # JavaScript para listening
-│   ├── configure-speaking.html   # Configuración de speaking
-│   ├── configure-speaking-script.js # JavaScript para speaking
-│   ├── configure-styles.css      # Estilos para configuración
-│   ├── collectible-cards.html    # Página de cartas coleccionables
-│   ├── cards-styles.css          # Estilos para cartas
-│   └── cards-script.js           # JavaScript para cartas
-├── vercel.json                   # Configuración de Vercel
-└── package.json                  # Dependencias del proyecto
-```
+### Prerrequisitos
+- Node.js (versión 16 o superior)
+- npm o yarn
 
-## 🛠️ Instalación y Despliegue
+### Pasos de Instalación
 
-### 1. Clonar el Repositorio
-```bash
-git clone <url-del-repositorio>
-cd gamified-learning-platform
-```
+1. **Clonar el repositorio**
+   ```bash
+   git clone <url-del-repositorio>
+   cd appsemillero
+   ```
 
-### 2. Instalar Dependencias
-```bash
-npm install
-```
+2. **Instalar dependencias**
+   ```bash
+   npm run install-all
+   ```
 
-### 3. Desplegar en Vercel
+3. **Ejecutar la aplicación**
+   ```bash
+   npm run dev
+   ```
 
-#### Opción A: Desde la CLI de Vercel
-```bash
-# Instalar Vercel CLI globalmente
-npm install -g vercel
+   Esto iniciará tanto el servidor backend (puerto 5000) como el frontend (puerto 3000).
 
-# Iniciar sesión en Vercel
-vercel login
+4. **Acceder a la aplicación**
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:5000
 
-# Desplegar el proyecto
-vercel
-
-# Para producción
-vercel --prod
-```
-
-#### Opción B: Desde el Dashboard de Vercel
-1. Conecta tu repositorio de GitHub a Vercel
-2. Vercel detectará automáticamente la configuración
-3. El despliegue se realizará automáticamente
-
-### 4. Configuración de Variables de Entorno
-No se requieren variables de entorno adicionales para el funcionamiento básico.
-
-## 🎯 Uso de la Plataforma
+## 📖 Uso de la Plataforma
 
 ### Para Docentes
 
 1. **Crear Actividad**
-   - Accede a la página principal
-   - Completa el formulario de creación
+   - Ve a "Crear Actividad" desde la página principal
    - Selecciona el tipo de actividad
-   - Configura los detalles específicos
+   - Completa el título y contenido
+   - Para Listening: sube un archivo de audio
+   - Para Speaking: opcionalmente sube una imagen de apoyo
+   - Haz clic en "Crear Actividad"
 
-2. **Configurar Actividad**
-   - Para Quiz: Agrega preguntas y opciones
-   - Para Fill in the Blanks: Escribe el texto y marca los espacios
-   - Para Listening: Sube archivo de audio y crea preguntas
-   - Para Speaking: Configura prompt (texto/imagen/audio) y criterios
+2. **Obtener Enlaces**
+   - Copia el enlace para estudiantes y compártelo
+   - Usa el enlace de administrador para ver resultados
 
-3. **Gestionar Resultados**
-   - Usa el enlace de administración
-   - Revisa calificaciones y respuestas
-   - Para Speaking: Escucha grabaciones y asigna calificaciones
-   - Exporta datos cuando necesites
+3. **Monitorear Resultados**
+   - Accede al enlace de administrador
+   - Ve resultados en tiempo real
+   - Escucha audios de Speaking
+   - Exporta datos a CSV o Excel
 
 ### Para Estudiantes
 
-1. **Acceder a Actividad**
-   - Usa el enlace de estudiante proporcionado por el docente
+1. **Acceder a la Actividad**
+   - Usa el enlace proporcionado por el docente
    - Ingresa tu nombre
-   - Completa la actividad
 
-2. **Ver Cartas Coleccionables**
-   - Visita `/collectible-cards.html`
-   - Ingresa tu nombre para ver tu colección
-   - Descarga o comparte tus cartas
+2. **Resolver la Actividad**
+   - **Quiz**: Selecciona la respuesta correcta
+   - **Fill blanks**: Completa los espacios en blanco
+   - **Listening**: Escucha el audio y responde
+   - **Speaking**: Graba tu respuesta de voz
 
-## 🔧 Desarrollo Local
+3. **Recibir Recompensa**
+   - Recibe tu carta coleccionable
+   - Descárgala en PNG o PDF
+   - ¡Agrégala a tu colección!
 
-### Ejecutar en Modo Desarrollo
-```bash
-npm run dev
+## 🏗️ Arquitectura Técnica
+
+### Backend (Node.js + Express)
+- **Base de datos**: SQLite
+- **API REST**: Endpoints para actividades, respuestas y resultados
+- **Subida de archivos**: Multer para audio e imágenes
+- **Generación de cartas**: Canvas para crear cartas coleccionables
+- **Exportación**: CSV y Excel
+
+### Frontend (React)
+- **Routing**: React Router para navegación
+- **Componentes**: Modulares y reutilizables
+- **Grabación de audio**: react-audio-voice-recorder
+- **Reproducción de audio**: react-audio-player
+- **Estilos**: CSS moderno con gradientes y animaciones
+
+### Base de Datos
+- **Actividades**: Almacena contenido, enlaces y metadatos
+- **Respuestas**: Guarda respuestas de estudiantes y puntuaciones
+- **Archivos**: Referencias a archivos de audio e imágenes
+
+## 🎮 Sistema de Gamificación
+
+### Niveles de Desempeño
+- **Principiante** (0-49%): 🐣
+- **Intermedio** (50-69%): 📚
+- **Avanzado** (70-89%): ⭐
+- **Experto** (90-100%): 🏆
+
+### Habilidades Desarrolladas
+- **Quiz**: Comprensión Lectora
+- **Fill blanks**: Escritura
+- **Listening**: Comprensión Auditiva
+- **Speaking**: Expresión Oral
+
+## 📁 Estructura del Proyecto
+
+```
+appsemillero/
+├── client/                 # Frontend React
+│   ├── public/
+│   ├── src/
+│   │   ├── components/     # Componentes React
+│   │   ├── App.js
+│   │   └── index.js
+│   └── package.json
+├── server/                 # Backend Node.js
+│   ├── index.js           # Servidor principal
+│   └── package.json
+├── uploads/               # Archivos subidos
+├── exports/              # Archivos exportados
+├── appsemillero.db       # Base de datos SQLite
+└── package.json          # Configuración principal
 ```
 
-### Estructura de la Base de Datos
+## 🔧 Scripts Disponibles
 
-#### Actividades
-```json
-{
-  "id": "string",
-  "title": "string",
-  "type": "quiz|fill-blanks|listening|speaking",
-  "description": "string",
-  "timeLimit": "number",
-  "questions": "array",
-  "text": "string (fill-blanks)",
-  "blanks": "array (fill-blanks)",
-  "audioFile": "string (listening/speaking)",
-  "imageFile": "string (speaking)",
-  "status": "draft|active",
-  "studentLink": "string",
-  "adminLink": "string",
-  "createdAt": "string",
-  "updatedAt": "string"
-}
-```
+- `npm run dev`: Ejecuta frontend y backend en modo desarrollo
+- `npm run server`: Solo backend
+- `npm run client`: Solo frontend
+- `npm run install-all`: Instala todas las dependencias
+- `npm run build`: Construye el frontend para producción
 
-#### Resultados
-```json
-{
-  "id": "string",
-  "activityId": "string",
-  "studentName": "string",
-  "answers": "object",
-  "score": "number|null",
-  "timeSpent": "number",
-  "audioFile": "string|null",
-  "status": "completed|pending_review",
-  "submittedAt": "string"
-}
-```
+## 🌟 Características Avanzadas
 
-## 🎨 Personalización
+### Seguridad
+- Enlaces únicos para cada actividad
+- Validación de datos en frontend y backend
+- Manejo seguro de archivos subidos
 
-### Temas y Colores
-Los colores principales se definen en las variables CSS en `styles.css`:
-```css
-:root {
-  --primary-color: #6366f1;
-  --secondary-color: #f59e0b;
-  --success-color: #10b981;
-  /* ... más variables */
-}
-```
+### Escalabilidad
+- Base de datos SQLite para desarrollo
+- Fácil migración a PostgreSQL o MySQL
+- API REST bien estructurada
 
-### Personajes de Cartas
-Los personajes se definen en el JavaScript de las cartas:
-```javascript
-const characters = {
-  'quiz': '📚',
-  'fill-blanks': '✍️',
-  'listening': '🎧',
-  'speaking': '🎤'
-};
-```
+### Experiencia de Usuario
+- Interfaz moderna y responsiva
+- Feedback visual inmediato
+- Animaciones suaves y transiciones
 
-## 📱 Compatibilidad
-
-- **Navegadores**: Chrome 80+, Firefox 75+, Safari 13+, Edge 80+
-- **Dispositivos**: Desktop, tablet, móvil
-- **Funcionalidades**: Grabación de audio, subida de archivos, generación de imágenes
-
-## 🚀 Próximas Mejoras
-
-- [ ] Integración con Supabase para base de datos persistente
-- [ ] Sistema de autenticación de usuarios
-- [ ] Más tipos de actividades (drag & drop, matching, etc.)
-- [ ] Análisis avanzado de resultados
-- [ ] Notificaciones en tiempo real
-- [ ] Modo offline para estudiantes
-- [ ] Integración con LMS existentes
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
-
-## 🤝 Contribuciones
-
-Las contribuciones son bienvenidas. Por favor:
+## 🤝 Contribución
 
 1. Fork el proyecto
 2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
@@ -247,12 +191,17 @@ Las contribuciones son bienvenidas. Por favor:
 4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abre un Pull Request
 
-## 📞 Soporte
+## 📄 Licencia
 
-Para soporte técnico o preguntas:
-- Abre un issue en GitHub
-- Contacta al equipo de desarrollo
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+
+## 🆘 Soporte
+
+Si tienes problemas o preguntas:
+1. Revisa la documentación
+2. Busca en los issues existentes
+3. Crea un nuevo issue con detalles del problema
 
 ---
 
-**Desarrollado con ❤️ para educadores y estudiantes**
+**AppSemillero** - Transformando la educación a través de la gamificación 🎓✨
